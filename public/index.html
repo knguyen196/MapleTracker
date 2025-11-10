@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://fonts.googleapis.com/css?family=Muli' rel='stylesheet'>
+  <title>Commi Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class ="pageContainer">
+    <div class ="sidebar">
+      <header>
+      <div class = "circle">
+      <img id="commiStonks" src = "images/comm_stonks.png" alt="CommiStonks emote">
+      </div>
+      Commi Tracker
+      </header>
+      <a href="bosses.html">Boss Tracker</a>
+    </div>
+
+  <main>
+    <H1>Maple Roster</H1>
+    <div id ="characterDiv">
+      <h2>Add Character</h2>
+      <input type="text" id="charName" placeholder="Character Name">
+      <div>
+      <label for="region">Region:</label>
+      <select id ="region">
+        <option value ="NA">NA</option>
+        <option value ="EU">EU</option>
+      </select>
+      </div>
+      <button id ="addCharBtn">Add Character</button>
+
+    </div>
+    <div id="charactersList">
+      <div id="activeChar" class ="activeCharHeader"></div>
+        <div id = "cardsList"></div>
+      <!-- Character list will be populated here -->
+    </div>
+    </main>
+  </div>
+  <script src="script.js" defer></script>
+</body>
+</html>

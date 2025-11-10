@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Muli' rel='stylesheet'>
+    <title>Boss Tracker</title>
+    <link rel="stylesheet" href="bosses.css">
+</head>
+<body>
+
+    <div class ="pageContainer">
+    <div class ="sidebar">
+      <header>
+      <div class = "circle">
+      <img id="commiStonks" src = "images/comm_stonks.png" alt="CommiStonks emote">
+      </div>
+      Commi Tracker
+      </header>
+      <a href="index.html">Roster</a>
+    </div>
+
+    <main>
+        <h1>Track bosses</h1>
+        <div id="mainBossDiv" >
+            <h1 id = "currentActiveChar"></h1>
+            <div id ="charAddBar" class ="addBar" hidden>
+                <label>
+                    <span>Add character:</span>
+                    <select id ="charAddSelect"></select>
+                </label>
+                <button id ="charAddBtn" type ="button">Add Character</button>
+                
+            </div>
+        </div>
+        <div id="bossSection">
+            <div id="bossBoard"></div>
+            <div id="bossGrandTotal"></div>
+            <div id = "logContainer">
+            <button id="logWeekBtn">Log this week</button>
+            <button id="showWeeklyLogBtn">Show saved logs</button>
+            <button id="resetBossPageBtn" type="button">Clear current runs</button>
+            </div>
+        </div>
+
+        <div id ="bossModal" class="modal" aria-hidden = "true">
+            <div class = "modalContent">
+                <button id = "bossModalClose" class ="modalClose" type="button" data-modal-close>x</button>
+                <h3 id="modalTitle">Add bosses</h3>
+                
+                    <div id="bossGrid" class="boss-grid"></div>
+                    <div id="bossDetails" hidden>
+
+                        <div class = "bossDetailsHead">
+                            <img id = "bossDetailsImg" alt =""/>
+                            <div class = "bossDetailTitles">
+                                <h4 id ="bossDetailsName">Boss</h4>
+                            </div>
+                        </div>
+
+                        <div class ="bossDetailsRow">
+                            <label class = "bossDetailField">
+                                <span>Difficulty</span>
+                                <select id ="bossDetailsDifficulty"></select>
+                            </label>
+
+                            <label class ="bossDetailField">
+                                <span>Party members</span>
+                                <select id ="bossDetailsParty"></select>
+                            </label>
+                        </div>
+
+                        <div class ="bossDetailsRow">
+                            <div class ="bossDetailsMeso">
+                                <div>Total Meso: <strong id ="bossDetailsMesoTotal">0</strong></div>
+                                <div>Meso per member: <strong id="bdMesoPer">0</strong></div>
+                            </div>
+                        </div>
+
+                        <div id = "bossDetailsDropContainer" class ="bossDetailsDrops" hidden>
+                            <div class ="bossDetailsDropsTitle">Drops</div>
+                            <div id = "bossDrops" class = "bossDropsGrid"></div>
+                        </div>
+                    </div>
+
+                <div class = "modalFooter">
+                    <button id="modalBtnDone" type="button" class ="primary">Done</button>
+                </div>
+            </div>
+        </div>
+       <div id="weeklyLogModal" class="modal" aria-hidden="true">
+  <div class="modalContent">
+    <button id="weeklyLogClose" class="modalClose" type="button" data-modal-close>x</button>
+    <h3>Weekly Boss Logs</h3>
+    <div id="weeklyLogBody"></div>
+    <div class="modalFooter">
+      <button id="resetWeeklyLogsBtn" type="button">Reset weekly logs</button>
+    </div>
+  </div>
+</div>
+    </main>
+ <script type="module" src="js/bosses.js"></script>
+</body>
+</html>

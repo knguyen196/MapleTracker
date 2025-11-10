@@ -1,0 +1,140 @@
+*{
+  font-family: 'Muli';
+}
+
+main {
+  flex: 1;
+  padding: 20px;
+  background-color: rgba(219, 233, 240, 0.959);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: inherit;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: black;
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+#commiStonks {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#commiStonks{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pageContainer {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #ffffffef;
+    padding: 15px;
+}
+
+.sidebar a {
+ display: flex;
+color: rgb(0, 0, 0);
+font-weight: 600;
+text-decoration: none;
+margin-bottom: 10px;
+}
+
+#charactersList{
+  display: flex;
+  margin-top: 40px;
+  flex-direction: column;
+  border: 2px solid black;
+  padding: 20px;
+  border-radius: 5px;
+  flex-wrap: wrap;
+  gap: 20px;
+  background-color: rgb(255, 255, 255);
+}
+
+#activeChar{
+  font-size: 24px;
+  font-weight: bold;
+}
+
+#characterDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 5px;
+  border: 2px solid black;
+  border-radius: 8px;
+  gap: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+#characterDiv h2 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#cardsList{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.charCard {
+  position: relative;
+  width: 220px;
+  height: 320px;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.charCard.active {
+  border: 2px solid gold;
+  background-color: rgba(255, 215, 0, 0.1);
+  box-shadow: 0 0 10px gold;
+}
+
+.characterImg{
+  width: 150px;
+  height: 150px;
+}
+
+.removeBtn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: rgb(63, 0, 0);
+  font-size: 18px;
+}
