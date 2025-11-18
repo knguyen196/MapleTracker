@@ -120,7 +120,7 @@ export function renderRuns(boardList, charKey) {
     return;
   }
 
-  const tot = runs.reduce((s, r) => s + (Number(r.mesoTotal) || 0), 0);
+  const tot = runs.reduce((s, r) => s + (Number(r.mesoPer) || 0), 0);
   totals.innerHTML = `Total meso: <strong>${formatInt(tot)}</strong>`;
 
   runs.sort((a,b) => b.ts - a.ts);

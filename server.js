@@ -25,23 +25,6 @@ const NEXON_HEADERS = { Accept: "application/json", "User-Agent": "MapleTracker/
 
 const WORLD_LIST = { 45: "Kronos", 1: "Bera", 70: "Hyperion", 19: "Scania", 46: "Solis", 30: "Luna" };
 
-const JOB_IDs = {
-  "206|12": "Hayato", "207|12": "Kanna", "225|12": "Lynn", "4|12": "Night Lord",
-  "2|12": "Arch Mage (F/P)", "31|12": "Demon Slayer", "23|12": "Mercedes",
-  "1|12": "Hero", "204|12": "Kaiser", "33|12": "Wild Hunter", "221|12": "Adele",
-  "227|12": "Sia", "209|22": "Demon Avenger", "212|12": "Shade", "215|12": "Blaster",
-  "218|12": "Ark", "35|12": "Mechanic", "226|12": "Mo Xuan", "5|32": "Cannon Master",
-  "14|12": "Night Walker", "21|12": "Aran", "2|32": "Bishop", "2|22": "Arch Mage (I/L)",
-  "32|12": "Battle Mage", "208|12": "Xenon", "3|22": "Marksman", "15|12": "Thunder Breaker",
-  "1|22": "Paladin", "1|32": "Dark Knight", "5|12": "Buccaneer", "5|22": "Corsair",
-  "210|12": "Zero", "3|12": "Bowmaster", "223|12": "Lara", "205|12": "Angelic Buster",
-  "3|32": "Pathfinder", "222|12": "Kain", "203|12": "Luminous", "214|12": "Kinesis",
-  "24|12": "Phantom", "217|12": "Illium", "22|17": "Evan", "216|12": "Cadena",
-  "12|12": "Blaze Wizard", "13|12": "Wind Archer", "220|12": "Hoyoung",
-  "4|22": "Shadower", "224|12": "Khali", "4|34": "Blade Master", "11|12": "Dawn Warrior",
-  "202|12": "Mihile"
-};
-
 function getJobName(jobID, jobDetail) {
   if (jobID == null || jobDetail == null) return null;
   return JOB_IDs[`${jobID}|${jobDetail}`] || null;
@@ -115,27 +98,19 @@ app.get("/api/profile", async function (req, res) {
     const worldNameOut =
       overallRow?.worldID != null ? (WORLD_LIST[overallRow.worldID] || `World ${overallRow.worldID}`) : null;
 
-    const jobIDOut = overallRow?.jobID ?? null;
-    const jobDetailOut = overallRow?.jobDetail ?? null;
+    const jobNameOut = overallRow?.jobName;
 
-    let jobNameOut = null;
-    if (jobIDOut != null && jobDetailOut != null) {
-      jobNameOut = getJobName(jobIDOut, jobDetailOut) || `Job ${jobIDOut} (Detail ${jobDetailOut})`;
-    } else if (jobIDOut != null) {
-      jobNameOut = `Job ${jobIDOut}`;
-    }
-
-    const resBody = {
-      characterName: overallRow?.characterName || name,
-      level: overallRow?.level ?? null,
-      totalExp: overallRow?.exp ?? null,
-      legionLevel: legionRow?.legionLevel ?? null,
-      worldName: worldNameOut,
-      jobID: jobIDOut,
-      jobDetail: jobDetailOut,
-      jobName: jobNameOut,
-      characterImg: overallRow?.characterImgURL || legionRow?.characterImgURL || null
-    };
+  const resBody = {
+    characterName: overallRow?.characterName || name,
+    level: overallRow?.level ?? null,
+    totalExp: overallRow?.exp ?? null,
+    legionLevel: legionRow?.legionLevel ?? null,
+    worldName: worldNameOut,
+    jobID: overallRow?.jobID ?? null,
+    jobDetail: overallRow?.jobDetail ?? null,
+    jobName: jobNameOut,
+    characterImg: overallRow?.characterImgURL || legionRow?.characterImgURL || null,
+};
 
     console.log("PROFILE response:", {
       characterName: resBody.characterName,
@@ -159,9 +134,9 @@ app.get("/api/profile", async function (req, res) {
   }
 });
 
-// Handy health check for hosts
+
 app.get("/api/health", (_req, res) => res.json({ ok: true }));
 
-// Start server (bind 0.0.0.0 for hosting providers)
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, "0.0.0.0", () => console.log(`listening on http://localhost:${PORT}`));
