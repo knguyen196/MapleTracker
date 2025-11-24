@@ -1,5 +1,7 @@
 import { VISIBLE_CHAR_KEYS, WEEKLY_ARCHIVE_KEY } from "./constants.js";
 
+const PRESET = "bossPresets";
+
 export function getRoster() {
   try { return JSON.parse(localStorage.getItem("mapleRoster")) || []; }
   catch { return []; }
@@ -57,4 +59,23 @@ export function getCharDisplayName(charKey) {
   const roster = getRoster();
   const char = roster.find(r => r.key === charKey);
   return char?.name || char?.characterName || charKey || "";
+}
+
+export function savePresetForChar(charKey, presetRuns) {
+  try {
+    localStorage.setItem(PRESET + charKey, JSON.stringify(presetRuns));
+  } catch (e) {
+    console.warn("Failed to save preset for", charKey, e);
+  }
+}
+
+export function loadPresetForChar(charKey) {
+  try {
+    const raw = localStorage.getItem(PRESET + charKey);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch (e) {
+    console.warn("Failed to load preset for", charKey, e);
+    return null;
+  }
 }

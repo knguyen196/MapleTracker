@@ -1,5 +1,5 @@
 import { getActiveCharKey, getRoster, loadVisibleChars, saveVisibleChars,
-         getRunsForChar, saveRunsForChar, setActiveChar } from "./storage.js";
+         getRunsForChar, saveRunsForChar, setActiveChar, savePresetForChar, loadPresetForChar } from "./storage.js";
 import { capitalize, formatInt } from "./utils.js";
 import { BOSS_INFO } from "./boss-info.js";
 import { bossDetails } from "./state.js";
@@ -31,7 +31,8 @@ const BOSS_ORDER = [
   "Limbo",
   "Baldrix",
   "Princess No",
-  "Akechi Mitsuhide"
+  "Akechi Mitsuhide",
+  "Black Mage"
 ]
 
 const MONTHLY_BOSSES = [
@@ -128,7 +129,7 @@ export function buildCharBoard(charKey) {
     bossDetails.state.charKey = charKey;
     setActiveChar(charKey);
     resetBossModal();
-    document.getElementById("bossModal")?.setAttribute("aria-hidden","false");
+    document.getElementById("bossModal")?.setAttribute("aria-hidden", "false");
   });
 
   if (remaining <= 0) {
@@ -146,20 +147,89 @@ export function buildCharBoard(charKey) {
 
   header.append(left, addBtn);
 
+  const presetBar = document.createElement("div");
+  presetBar.className = "charBoardPresetBar";
+
+  const savePresetBtn = document.createElement("button");
+  savePresetBtn.className = "savePresetBtn";
+  savePresetBtn.textContent = "Save preset";
+  savePresetBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const currentRuns = getRunsForChar(charKey);
+    if (!currentRuns.length) {
+      alert("No boss runs to save as a preset.");
+      return;
+    }
+
+
+    const preset = currentRuns.map(r => ({
+      bossId: r.bossId,
+      difficulty: r.difficulty,
+      partySize: r.partySize,
+    }));
+
+    savePresetForChar(charKey, preset);
+    alert("Preset saved for this character.");
+  });
+
+  const loadPresetBtn = document.createElement("button");
+  loadPresetBtn.className = "loadPresetBtn";
+  loadPresetBtn.textContent = "Load preset";
+  loadPresetBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const preset = loadPresetForChar(charKey);
+    if (!preset || !preset.length) {
+      alert("No preset found for this character yet.");
+      return;
+    }
+
+    const newRuns = [];
+    const now = Date.now();
+    let i = 0;
+
+    preset.forEach(p => {
+      const boss = BOSS_INFO[p.bossId];
+      if (!boss) return;
+      const d = boss.difficulties?.[p.difficulty];
+      if (!d) return;
+
+      const partySize = Math.max(1, Math.min(p.partySize || 1, d.maxPartySize || 6));
+      const total = Number(d.meso || 0);
+      const per = Math.floor(total / partySize);
+
+      newRuns.push({
+        ts: now + (i++),
+        bossId: p.bossId,
+        bossName: boss.name,
+        difficulty: p.difficulty,
+        partySize,
+        mesoTotal: total,
+        mesoPer: per,
+        gotDrops: [],
+      });
+    });
+
+    saveRunsForChar(charKey, newRuns);
+    renderBossBoard();
+  });
+
+  presetBar.append(savePresetBtn, loadPresetBtn);
+
   const totals = document.createElement("div");
   totals.className = "charBoardTotal";
   totals.innerHTML = `
-  Total meso: <span class="charMesoTotal">0</span><br>
-  Bosses: <span class="charBossCount">0</span>/14
-`;
+    Total meso: <span class="charMesoTotal">0</span><br>
+    Bosses: <span class="charBossCount">0</span>/14
+  `;
 
   const runsList = document.createElement("div");
   runsList.className = "charBoardRunsList";
 
-  section.append(header, totals, runsList, removeBtn);
+  section.append(header, presetBar, totals, runsList, removeBtn);
   renderRuns(section, charKey);
   return section;
 }
+
 
 export function renderRuns(boardList, charKey) {
   const totals = boardList.querySelector(".charBoardTotal");

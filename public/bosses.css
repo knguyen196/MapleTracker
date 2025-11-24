@@ -490,6 +490,23 @@ margin-bottom: 10px;
   gap: 8px;
 }
 
+.charBoardPresetBar {
+  display: flex;
+  gap: 6px;
+}
+
+.savePresetBtn,
+.loadPresetBtn {
+  background: #165a46;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
 .runEntryUndoBtn {
   border: none;
   background: none;
