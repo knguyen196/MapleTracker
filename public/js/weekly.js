@@ -18,7 +18,7 @@ export function logCurrentWeek() {
     charsRan.push(char.name || char.characterName || char.key);
     seen.add(char.key);
     runs.forEach(r => {
-      totalMeso += Number(r.mesoTotal) || 0;
+      totalMeso += Number(r.mesoPer) || 0;
       (r.gotDrops || []).forEach(d => allDrops.add(d));
     });
   });
@@ -32,7 +32,7 @@ export function logCurrentWeek() {
     if (!runs || !runs.length) continue;
     charsRan.push(charKey);
     runs.forEach(r => {
-      totalMeso += Number(r.mesoTotal) || 0;
+      totalMeso += Number(r.mesoPer) || 0;
       (r.gotDrops || []).forEach(d => allDrops.add(d));
     });
   }
