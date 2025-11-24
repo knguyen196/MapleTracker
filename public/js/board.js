@@ -3,6 +3,42 @@ import { getActiveCharKey, getRoster, loadVisibleChars, saveVisibleChars,
 import { capitalize, formatInt } from "./utils.js";
 import { BOSS_INFO } from "./boss-info.js";
 import { bossDetails } from "./state.js";
+import { resetBossModal, bossDetailsOpen, setDifficulty, updateMesoDisplay } from "./bossDetails.js";
+
+const BOSS_ORDER = [
+  "Zakum",
+  "Magnus",
+  "Hilla",
+  "Papulatus",
+  "Piere",
+  "Von Bon",
+  "Crimson Queen",
+  "Vellum",
+  "Pink Bean",
+  "Cygnus",
+  "Lotus",
+  "Damien",
+  "Guardian Angel Slime",
+  "Lucid",
+  "Will",
+  "Gloom",
+  "Verus Hilla",
+  "Darknell",
+  "Chosen Seren",
+  "Kalos the Guardian",
+  "First Adversary",
+  "Kaling",
+  "Limbo",
+  "Baldrix",
+  "Princess No",
+  "Akechi Mitsuhide"
+]
+
+const MONTHLY_BOSSES = [
+  "Black Mage"
+];
+
+const BOSS_MAX = 180;
 
 export function renderCharAdd() {
   const select = document.getElementById("charAddSelect");
@@ -78,14 +114,27 @@ export function buildCharBoard(charKey) {
   left.className = "charBoardHeaderLeft";
   left.innerHTML = `<img class="charBoardAvatar" src="${img}" alt="${name}"><div class="charBoardName">${name}</div>`;
 
+  const runs = getRunsForChar(charKey);
+  const maxBosses = 14;
+  const remaining = Math.max(0, maxBosses - runs.length);
+
   const addBtn = document.createElement("button");
   addBtn.className = "charBoardAddBtn";
   addBtn.textContent = "Add Bosses";
   addBtn.addEventListener("click", () => {
+    if (remaining <= 0) {
+      return;
+    }
     bossDetails.state.charKey = charKey;
     setActiveChar(charKey);
+    resetBossModal();
     document.getElementById("bossModal")?.setAttribute("aria-hidden","false");
   });
+
+  if (remaining <= 0) {
+    addBtn.disabled = true;
+    addBtn.title = "Maximum number of boss runs reached.";
+  }
 
   const removeBtn = document.createElement("button");
   removeBtn.className = "charBoardRemoveBtn";
@@ -96,9 +145,13 @@ export function buildCharBoard(charKey) {
   });
 
   header.append(left, addBtn);
+
   const totals = document.createElement("div");
   totals.className = "charBoardTotal";
-  totals.textContent = "Total meso: 0";
+  totals.innerHTML = `
+  Total meso: <span class="charMesoTotal">0</span><br>
+  Bosses: <span class="charBossCount">0</span>/14
+`;
 
   const runsList = document.createElement("div");
   runsList.className = "charBoardRunsList";
@@ -114,16 +167,40 @@ export function renderRuns(boardList, charKey) {
   if (!totals || !list) return;
 
   const runs = getRunsForChar(charKey);
-  if (!runs.length) {
-    totals.textContent = "Total meso: 0";
-    list.innerHTML = `<div class="noRunsMsg">No boss runs recorded for this character.</div>`;
-    return;
-  }
+
+  runs.sort((a,b) => {
+
+    const indexA = BOSS_ORDER.indexOf(a.bossName);
+    const indexB = BOSS_ORDER.indexOf(b.bossName);
+
+    if (indexA === -1 && indexB === -1){
+      return 0;
+    }
+
+    if (indexA === -1) return 1;
+
+    if (indexB === -1) return -1;
+
+    return indexA - indexB;
+
+  });
+
+  const mesoSpan = totals.querySelector(".charMesoTotal");
+  const bossCountSpan = totals.querySelector(".charBossCount");
+
+  const countedRuns = runs.filter(r => !MONTHLY_BOSSES.includes(r.bossName));
 
   const tot = runs.reduce((s, r) => s + (Number(r.mesoPer) || 0), 0);
-  totals.innerHTML = `Total meso: <strong>${formatInt(tot)}</strong>`;
+  if (mesoSpan) mesoSpan.textContent = formatInt(tot);
+  if (bossCountSpan) bossCountSpan.textContent = countedRuns.length;
 
-  runs.sort((a,b) => b.ts - a.ts);
+  if (!runs.length) {
+  if (mesoSpan) mesoSpan.textContent = "0";
+  if (bossCountSpan) bossCountSpan.textContent = "0";
+  list.innerHTML = `<div class="noRunsMsg">No boss runs recorded for this character.</div>`;
+  return;
+}
+
 
   const frag = document.createDocumentFragment();
   runs.forEach(run => {
@@ -136,7 +213,10 @@ export function renderRuns(boardList, charKey) {
       <div class="runEntryMeta">${capitalize(run.difficulty)} | Party size: ${run.partySize}</div>
       <div class="runEntryMeso">${formatInt(run.mesoPer)}</div>
       <div class="runEntryDrops"></div>
-      <div class="runEntryActions"><button class="runEntryUndoBtn">Undo</button></div>
+      <div class="runEntryActions">
+      <button class="runEntryEditBtn">Edit</button>
+      <button class="runEntryUndoBtn">x</button>
+      </div>
     `;
 
     const dropsWrap = div.querySelector(".runEntryDrops");
@@ -181,10 +261,13 @@ export function grandTotal(visible) {
   const section = document.getElementById("bossSection");
   if (!board) return;
 
-  let total = 0;
+  let totalMeso = 0;
+  let totalRuns = 0;
+
   (visible || []).forEach(k => {
     const runs = getRunsForChar(k);
-    total += runs.reduce((s, r) => s + (Number(r.mesoPer) || 0), 0);
+    totalRuns += runs.length;
+    totalMeso += runs.reduce((s, r) => s + (Number(r.mesoPer) || 0), 0);
   });
 
   let footer = document.getElementById("bossGrandTotal");
@@ -194,24 +277,54 @@ export function grandTotal(visible) {
     footer.className = "bossGrandTotal";
     (section || board.parentElement || document.body).appendChild(footer);
   }
-  footer.innerHTML = `Grand Total Meso: <strong>${total.toLocaleString()}</strong>`;
+
+  footer.innerHTML = `
+    Grand Total Meso: <strong>${totalMeso.toLocaleString()}</strong> |
+    Bosses: <strong>${totalRuns}/${BOSS_MAX}</strong>
+  `;
+  
 }
 
-
 document.getElementById("bossBoard")?.addEventListener("click", (e) => {
-  const btn = e.target.closest(".runEntryUndoBtn");
-  if (!btn) return;
+  const undoBtn = e.target.closest(".runEntryUndoBtn");
+  const editBtn = e.target.closest(".runEntryEditBtn");
+  if (!undoBtn && !editBtn) return;
+
   const card = e.target.closest(".bossRunEntry");
-  const board = e.target.closest(".charBossBoard");
+  const board = e. target.closest(".charBossBoard");
   const ts = Number(card?.dataset.ts);
   const charKey = board?.dataset.charKey;
   if (!ts || !charKey) return;
 
   const runs = getRunsForChar(charKey);
   const idx = runs.findIndex(r => r.ts === ts);
-  if (idx >= 0) {
+  if (idx < 0) return;
+
+  if (undoBtn) {
     runs.splice(idx, 1);
     saveRunsForChar(charKey, runs);
+    renderRuns(board, charKey);
     renderBossBoard();
+    return;
+  }
+
+  if (editBtn) {
+    const run = runs[idx];
+    bossDetails.state.charKey = charKey;
+    bossDetails.state.editTs = ts;
+
+    bossDetailsOpen(run.bossId);
+
+    bossDetails.diff.value = run.difficulty;
+    setDifficulty(run.difficulty);
+    bossDetails.party.value = String(run.partySize);
+    updateMesoDisplay();
+
+    const checks = document.querySelectorAll("#bossDrops input[name='bossDrop']");
+    checks.forEach(chk => {
+      chk.checked = !!(run.gotDrops || []).includes(chk.value);
+    });
+
+    document.getElementById("bossModal")?.setAttribute("aria-hidden","false");
   }
 });

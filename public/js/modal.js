@@ -3,12 +3,16 @@ import { IDS } from "./constants.js";
 import { BOSS_INFO } from "./boss-info.js";
 import { getActiveCharKey, getRunsForChar, saveRunsForChar } from "./storage.js";
 import { renderBossBoard } from "./board.js";
-import { renderWeeklyArchive } from "./weekly.js"; // <-- important
+import { renderWeeklyArchive } from "./weekly.js";
+
+ const MONTHLY_BOSSES = [
+    "Black Mage"
+];
 
 export function openModal(id) {
   const modal = document.getElementById(id);
   if (!modal) return;
-  if (id === IDS.weeklyLogModal) renderWeeklyArchive(); // populate only when opening weekly
+  if (id === IDS.weeklyLogModal) renderWeeklyArchive();
   modal.setAttribute("aria-hidden", "false");
 }
 
@@ -73,8 +77,18 @@ export function wireModals() {
     ).map(i => i.value);
 
     const runs = getRunsForChar(charKey);
-    runs.push({
-      ts: Date.now(),
+    const maxBosses = 14;
+
+    const nonMonthlyCount = runs.filter(r => !MONTHLY_BOSSES.includes(r.bossName)).length;
+    const isMonthly = MONTHLY_BOSSES.includes(boss.name);
+
+    if (!bossDetails.state.editTs && !isMonthly && nonMonthlyCount >= maxBosses) {
+    alert("This character already has 14 weekly bosses logged.");
+    return;
+    }
+    
+    const newRun = {
+      ts: bossDetails.state.editTs || Date.now(),
       bossId,
       bossName: boss.name,
       difficulty: diffKey,
@@ -82,10 +96,20 @@ export function wireModals() {
       mesoTotal: total,
       mesoPer: per,
       gotDrops: drops,
-    });
-    saveRunsForChar(charKey, runs);
+    };
 
-    renderBossBoard();
-    closeModal(IDS.bossModal);
-  });
+    if (bossDetails.state.editTs) {
+      const idx = runs.findIndex(r => r.ts === bossDetails.state.editTs);
+      if (idx >= 0) {
+        runs[idx] = newRun;
+      }
+  } else {
+    runs.push(newRun);
+  }
+
+  bossDetails.state.editTs = null;
+  saveRunsForChar(charKey, runs);
+  renderBossBoard();
+  closeModal(IDS.bossModal);
+});
 }

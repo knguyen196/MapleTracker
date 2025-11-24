@@ -1,6 +1,7 @@
 import { bossDetails } from "./state.js";
 import { capitalize, formatInt } from "./utils.js";
 import { BOSS_INFO } from "./boss-info.js";
+import { IDS } from "./constants.js";
 
 export function bossDetailsOpen(bossId) {
   const boss = BOSS_INFO[bossId];
@@ -68,3 +69,30 @@ bossDetails.diff?.addEventListener("change", () => {
 });
 bossDetails.party?.addEventListener("change", updateMesoDisplay);
 bossDetails.party?.addEventListener("input", updateMesoDisplay);
+
+
+export function resetBossModal() {
+  bossDetails.state.bossId = null;
+  bossDetails.state.diffKey = null;
+  bossDetails.state.ediTs = null;
+
+  if (bossDetails.root) {
+    bossDetails.root.hidden = true;
+  }
+
+  if (bossDetails.diff) bossDetails.diff.innerHTML = "";
+  if (bossDetails.party) bossDetails.party.innerHTML = "";
+  if (bossDetails.mesoTotal) bossDetails.mesoTotal.textContent = "0";
+  if (bossDetails.mesoPer) bossDetails.mesoPer.textContent = "0";
+  if (bossDetails.drops) bossDetails.drops.innerHTML = "";
+  if (bossDetails.dropsWrap) bossDetails.dropsWrap.hidden = true;
+
+  const modal = document.getElementById(IDS.bossModal);
+  const content = modal?.querySelector(".modalContent");
+  if (content) {
+    content.scrollTo({
+      top: 0,
+      behavior: "auto"
+    });
+  }
+}

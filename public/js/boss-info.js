@@ -134,7 +134,9 @@ export const BOSS_INFO = {
                 meso: 444675000,
                 drops: [
                         {name: "Black Heart", img: "images/Black Heart.png"},
-                        {name: "Berzerked", img: "images/Berserked.png"}
+                        {name: "Berzerked", img: "images/Berserked.png"},
+                        {name: "Red Jade Boss Ring Box", img: "images/RedRingBox.png"}
+                        
                 ],
                 maxPartySize: 6
             },
@@ -143,7 +145,8 @@ export const BOSS_INFO = {
                 drops: [
                     {name: "Black Heart", img: "images/Black Heart.png"},
                     {name: "Berzerked", img: "images/Berserked.png"},
-                    {name: "Total Control", img: "images/TC.png"}
+                    {name: "Total Control", img: "images/TC.png"},
+                    {name: "White Jade Boss Ring Box", img: "images/WhiteJadeBox.png"}
                 ],
                 maxPartySize: 2
             }
@@ -162,7 +165,8 @@ export const BOSS_INFO = {
             hard: {
                 meso: 421875000,
                 drops: [
-                    {name: "Magical Eyepatch", img: "images/Magic Eyepatch.png"}
+                    {name: "Magical Eyepatch", img: "images/Magic Eyepatch.png"},
+                    {name: "Red Jade Boss Ring Box", img: "images/RedRingBox.png"}
                 ],
                 maxPartySize: 6
             }
@@ -180,6 +184,9 @@ export const BOSS_INFO = {
             },
             chaos:{
                 meso: 600578125,
+                drops: [
+                    {name: "Black Jade Boss Ring Box", img: "images/BlackJadeBox.png"}
+                ],
                 maxPartySize: 6
             }
         }
@@ -201,7 +208,8 @@ export const BOSS_INFO = {
             hard: {
                 meso: 504000000,
                 drops:[
-                    {name: "Dreamy Belt", img: "images/Belt.png"}
+                    {name: "Dreamy Belt", img: "images/Belt.png"},
+                    {name: "Red Jade Boss Ring Box", img: "images/RedRingBox.png"}
                 ],
                 maxPartySize: 6
             }
@@ -226,7 +234,8 @@ export const BOSS_INFO = {
             hard:{
                 meso: 621810000,
                 drops: [
-                    {name: "Will's Cursed Spellbook Selection Box", img:"images/Book.png"}
+                    {name: "Will's Cursed Spellbook Selection Box", img:"images/Book.png"},
+                    {name: "Red Jade Boss Ring Box", img: "images/RedRingBox.png"}
                 ],
                 maxPartySize: 6
             }
@@ -247,7 +256,8 @@ export const BOSS_INFO = {
             chaos: {
                 meso: 563945000,
                 drops:[
-                    {name: "Endless Terror", img: "images/ET.png"}
+                    {name: "Endless Terror", img: "images/ET.png"},
+                    {name: "Black Jade Boss Ring Box", img: "images/BlackJadeBox.png"}
                 ],
                 maxPartySize: 6
             } 
@@ -262,13 +272,17 @@ export const BOSS_INFO = {
 
             normal: {
                 meso: 581880000,
+                drops:[
+                    {name: "Red Jade Boss Ring Box", img: "images/RedRingBox.png"}
+                ],
                 maxPartySize: 6,
             },
 
             hard: {
                 meso: 762105000,
                 drops:[
-                    {name: "Source of Suffering", img: "images/SOS.png"}
+                    {name: "Source of Suffering", img: "images/SOS.png"},
+                    {name: "Black Jade Boss Ring Box", img: "images/BlackJadeBox.png"}
                 ],
                 maxPartySize: 6
             }
@@ -289,7 +303,8 @@ export const BOSS_INFO = {
             hard:{
                 meso: 667920000,
                 drops:[
-                    {name: "Commanding Force Earring", img: "images/CFE.png"}
+                    {name: "Commanding Force Earring", img: "images/CFE.png"},
+                    {name: "Black Jade Boss Ring Box", img: "images/BlackJadeBox.png"}
                 ],
                 maxPartySize: 6
             }
@@ -304,13 +319,27 @@ export const BOSS_INFO = {
 
             normal:{
                 meso: 889021875,
+                drops:[
+                    {name: "Black Jade Boss Ring Box", img: "images/BlackJadeBox.png"}
+                ],
                 maxPartySize: 6
             },
 
             hard:{
                 meso: 1096562500,
                 drops: [
-                    {name: "Mitra's Rage Selection Box", img: "images/Emblem.png"}
+                    {name: "Mitra's Rage Selection Box", img: "images/Emblem.png"},
+                    {name: "White Jade Boss Ring Box", img: "images/WhiteJadeBox.png"}
+                ],
+                maxPartySize: 6
+            },
+
+            extreme:{
+                meso: 4235000000,
+                drops: [
+                    {name: "Mitra's Rage Selection Box", img: "images/Emblem.png"},
+                    {name: "Exceptional Hammer (Face Acc)", img: "images/HammerAcc.png"},
+                    {name: "White Jade Boss Ring Box", img: "images/WhiteJadeBox.png"}
                 ],
                 maxPartySize: 6
             }
@@ -325,12 +354,17 @@ export const BOSS_INFO = {
 
             easy:{
                 meso: 937500000,
+                drops: [
+                    {name: "White Jade Boss Ring Box", img: "images/WhiteJadeBox.png"}
+                ],
                 maxPartySize: 6
             },
 
             normal:{
                 meso: 1300000000,
                 drops: [
+                    {name: "White Jade Boss Ring Box", img: "images/WhiteJadeBox.png"},
+                    {name: "Grindstone of Life", img: "images/GrindstoneOfLife.png"}
                 ],
                 maxPartySize: 6
             },
@@ -338,7 +372,8 @@ export const BOSS_INFO = {
             chaos:{
                 meso: 2600000000,
                 drops:[
-    
+                    {name: "Life Boss Ring Box", img: "images/LifeBossRing.png"},
+                    {name: "Grindstone of Life", img: "images/GrindstoneOfLife.png"}
                 ],
                 maxPartySize: 6
             },
@@ -346,6 +381,9 @@ export const BOSS_INFO = {
             extreme:{
                 meso: 5200000000,
                 drops:[
+                    {name: "Exceptional Hammer (Eye Acc)", img: "images/HammerEye.png"},
+                    {name: "Life Boss Ring Box", img: "images/LifeBossRing.png"},
+                    {name: "Grindstone of Life", img: "images/GrindstoneOfLife.png"}
                 ],
                 maxPartySize: 6
             }
@@ -370,12 +408,17 @@ export const BOSS_INFO = {
 
             easy: {
                 meso: 1031250000,
+                drops: [
+                    {name: "White Jade Boss Ring Box", img: "images/WhiteJadeBox.png"}
+                ],
                 maxPartySize: 6
             },
 
             normal: {
                 meso: 1506500000,
                 drops: [
+                    {name: "White Jade Boss Ring Box", img: "images/WhiteJadeBox.png"},
+                    {name: "Grindstone of Life", img: "images/GrindstoneOfLife.png"}
                 ],
                 maxPartySize: 6
             },
@@ -383,6 +426,8 @@ export const BOSS_INFO = {
             hard: {
                 meso: 2990000000,
                 drops: [
+                    {name: "Life Boss Ring Box", img: "images/LifeBossRing.png"},
+                    {name: "Grindstone of Life", img: "images/GrindstoneOfLife.png"}
                 ],
                 maxPartySize: 6
             },
@@ -390,6 +435,9 @@ export const BOSS_INFO = {
             extreme: {
                 meso: 6026000000,
                 drops: [
+                    {name: "Exceptional Hammer (Earrings)", img: "images/HammerEar.png"},
+                    {name: "Life Boss Ring Box", img: "images/LifeBossRing.png"},
+                    {name: "Grindstone of Life", img: "images/GrindstoneOfLife.png"}
                 ],
                 maxPartySize: 6
             }
@@ -405,6 +453,8 @@ export const BOSS_INFO = {
             normal:{
                 meso: 2100000000,
                 drops:[
+                    {name: "Life Boss Ring Box", img: "images/LifeBossRing.png"},
+                    {name: "Grindstone of Faith", img: "images/GrindstoneOfFaith.png"}
                 ],
                 maxPartySize: 3
             },
@@ -412,7 +462,9 @@ export const BOSS_INFO = {
             hard:{
                 meso: 3745000000,
                 drops:[
-                    {name: "Whisper of the Source", img: "images/Whisper.png"}
+                    {name: "Whisper of the Source", img: "images/Whisper.png"},
+                    {name: "Life Boss Ring Box", img: "images/LifeBossRing.png"},
+                    {name: "Grindstone of Faith", img: "images/GrindstoneOfFaith.png"}
                 ],
                 maxPartySize: 3
             }
@@ -428,6 +480,8 @@ export const BOSS_INFO = {
             normal:{
                 meso: 2800000000,
                 drops:[
+                    {name: "Life Boss Ring Box", img: "images/LifeBossRing.png"},
+                    {name: "Grindstone of Faith", img: "images/GrindstoneOfFaith.png"}
                 ],
                 maxPartySize: 3
             },
@@ -435,7 +489,9 @@ export const BOSS_INFO = {
             hard:{
                 meso: 4200000000,
                 drops:[
-                    {name: "Oath of Death", img: "images/Oath.png"}
+                    {name: "Oath of Death", img: "images/Oath.png"},
+                    {name: "Life Boss Ring Box", img: "images/LifeBossRing.png"},
+                    {name: "Grindstone of Faith", img: "images/GrindstoneOfFaith.png"}
                 ],
                 maxPartySize: 6
             }
@@ -465,4 +521,29 @@ export const BOSS_INFO = {
             }
         }
     },
+
+    black_mage:{
+        id: "black_mage",
+        name: "Black Mage",
+        img: "images/Black Mage.png",
+        difficulties: {
+            hard: {
+                meso: 4500000000,
+                drops: [
+                    {name: "Genesis Badge", img: "images/Genesis Badge.png"},
+                    {name: "White Jade Boss Ring Box", img: "images/WhiteJadeBox.png"}
+                ],
+                maxPartySize: 6
+            },
+
+            extreme: {
+                meso: 18000000000,
+                drops: [
+                    {name: "Genesis Badge", img: "images/Genesis Badge.png"},
+                    {name: "Exceptional Hammer (Belt)", img: "images/HammerBelt.png"},
+
+                ],
+            }
+        }
+    }
 }

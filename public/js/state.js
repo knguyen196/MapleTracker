@@ -8,5 +8,5 @@ export const bossDetails = {
   mesoPer: document.getElementById("bdMesoPer"),
   dropsWrap: document.getElementById("bossDetailsDropContainer"),
   drops: document.getElementById("bossDrops"),
-  state: { bossId: null, diffKey: null, charKey: null },
+  state: { bossId: null, diffKey: null, charKey: null, editTs: null },
 };
