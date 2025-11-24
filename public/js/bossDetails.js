@@ -52,6 +52,17 @@ export function setDifficulty(diffKey) {
       <span>${dr.name}</span>`;
     bossDetails.drops.appendChild(lbl);
   });
+
+const modal = document.getElementById(IDS.bossModal);
+const content = modal?.querySelector(".modalContent");
+const dropsSection = bossDetails.dropsWrap;
+
+if (content && dropsSection && !dropsSection.hidden) {
+  content.scrollTo({
+    top: dropsSection.offsetTop - 20,
+    behavior: "smooth"
+  });
+}
 }
 
 export function updateMesoDisplay() {

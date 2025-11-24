@@ -3,6 +3,7 @@ import { IDS } from "./constants.js";
 import { openModal } from "./modal.js";
 import { BOSS_INFO } from "./boss-info.js";
 import { bossDetails } from "./state.js";
+import { getRunsForChar } from "./storage.js";
 
 export function renderBossGrid() {
   const grid = document.getElementById(IDS.bossGrid);
@@ -37,5 +38,21 @@ grid.addEventListener("click", (e) => {
     });
   }
 });
+}
 
+export function markDoneBossesForChar(charKey) {
+  const grid = document.getElementById(IDS.bossGrid);
+  if (!grid || !charKey) return;
+
+  const runs = getRunsForChar(charKey);
+  const doneBossIds = new Set(runs.map(r => String(r.bossId)));
+
+  grid.querySelectorAll(".bossCard").forEach(card => {
+    const id = card.dataset.bossId;
+    if (doneBossIds.has(id)) {
+      card.classList.add("bossCardDone");
+    } else {
+      card.classList.remove("bossCardDone");
+    }
+  });
 }

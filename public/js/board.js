@@ -4,6 +4,7 @@ import { capitalize, formatInt } from "./utils.js";
 import { BOSS_INFO } from "./boss-info.js";
 import { bossDetails } from "./state.js";
 import { resetBossModal, bossDetailsOpen, setDifficulty, updateMesoDisplay } from "./bossDetails.js";
+import { markDoneBossesForChar } from "./bossGrid.js";
 
 const BOSS_ORDER = [
   "Zakum",
@@ -129,6 +130,7 @@ export function buildCharBoard(charKey) {
     bossDetails.state.charKey = charKey;
     setActiveChar(charKey);
     resetBossModal();
+    markDoneBossesForChar(charKey);
     document.getElementById("bossModal")?.setAttribute("aria-hidden", "false");
   });
 
@@ -277,9 +279,12 @@ export function renderRuns(boardList, charKey) {
     const div = document.createElement("div");
     div.className = "bossRunEntry";
     div.dataset.ts = String(run.ts);
-
+    const boss = BOSS_INFO[run.bossId];
     div.innerHTML = `
-      <div class="runEntryTitle">${run.bossName}</div>
+      <div class="runEntryTitle">
+      <img class="runEntryBossImg" src="${boss.img}" alt="${run.bossName}">
+      <span>${run.bossName}</span>
+      </div>
       <div class="runEntryMeta">${capitalize(run.difficulty)} | Party size: ${run.partySize}</div>
       <div class="runEntryMeso">${formatInt(run.mesoPer)}</div>
       <div class="runEntryDrops"></div>
@@ -290,7 +295,6 @@ export function renderRuns(boardList, charKey) {
     `;
 
     const dropsWrap = div.querySelector(".runEntryDrops");
-    const boss = BOSS_INFO[run.bossId];
     const d = boss?.difficulties?.[run.difficulty];
     const dropDefs = Array.isArray(d?.drops) ? d.drops : [];
     (run.gotDrops || []).forEach(name => {

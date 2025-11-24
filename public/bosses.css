@@ -149,6 +149,17 @@ margin-bottom: 10px;
   cursor: pointer;
 }
 
+.bossCardDone {
+  opacity: 0.4;
+  filter: grayscale(0.8);
+  pointer-events: none;
+}
+
+.bossCardDone .bossName {
+  text-decoration: line-through;
+  font-style: italic;
+}
+
 .bossCard img {
   width: 100%;
   height: 100%;
@@ -312,6 +323,14 @@ margin-bottom: 10px;
   color: #222;
 }
 
+.runEntryBossImg {
+  width: 29px;
+  height: 29px;
+  object-fit: contain;
+  border: solid #000000 1px;
+  border-radius: 50px;
+}
+
 .runEntryMeta {
   grid-area: meta;
   font-size: 13px;
@@ -325,13 +344,6 @@ margin-bottom: 10px;
   color: #000;
   text-align: left;
   justify-self: flex-start;
-}
-
-.bossRunEntry img {
-  width: 48px;
-  height: 48px;
-  object-fit: contain;
-  margin-bottom: 4px;
 }
 
 .bossRunEntry:hover {
@@ -356,12 +368,12 @@ margin-bottom: 10px;
 }
 
 .runEntryDropImg {
-  width: 22px;
-  height: 22px;
+  width: 30px;
+  height: 30px;
   object-fit: contain;
-  border: 1px solid #a09999;
+  border: 1px none #000000;
   border-radius: 4px;
-  background: #fff;
+  background: none;
 }
 
 .runEntryActions {
