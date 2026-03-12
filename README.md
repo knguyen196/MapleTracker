@@ -49,4 +49,3 @@ The app runs at `http://localhost:3000` by default.
 - **Backend**: Node.js, Express v5
 - **Frontend**: Vanilla JS (ES6 modules), HTML5, CSS3
 - **Data**: Browser localStorage
-- **External API**: [Nexon MapleStory Ranking API](https://www.nexon.com) (no auth required)
