@@ -85,7 +85,8 @@ bossDetails.party?.addEventListener("input", updateMesoDisplay);
 export function resetBossModal() {
   bossDetails.state.bossId = null;
   bossDetails.state.diffKey = null;
-  bossDetails.state.ediTs = null;
+  bossDetails.state.editTs = null;
+  bossDetails.state.charKey = null;
 
   if (bossDetails.root) {
     bossDetails.root.hidden = true;
@@ -103,7 +104,13 @@ export function resetBossModal() {
   if (content) {
     content.scrollTo({
       top: 0,
-      behavior: "auto"
+      behavior: "auto",
     });
+  }
+
+
+  const grid = document.getElementById(IDS.bossGrid);
+  if (grid) {
+    grid.style.display = "grid";
   }
 }
