@@ -1,6 +1,6 @@
 # MapleTracker
 
-A personal boss-run tracker for MapleStory. Log your weekly boss clears across multiple characters, track meso earnings, and save item drops — all stored locally in your browser.
+A personal boss-run tracker for MapleStory. Log your weekly boss clears across multiple characters, track meso earnings, and save item drops all stored locally in your browser.
 
 ![MapleTracker](public/images/comm_stonks.png)
 
